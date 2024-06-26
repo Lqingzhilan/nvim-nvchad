@@ -1,11 +1,11 @@
 require("nvim-tree").setup {
   filters = {
-    dotfiles = false,
-    exclude = { vim.fn.stdpath "config" .. "/lua/custom" },
+    dotfiles = true,
+    -- exclude = { vim.fn.stdpath "config" .. "/lua/custom" },
   },
-  disable_netrw = true,
+  disable_netrw = false,
   hijack_netrw = true,
-  hijack_cursor = true,
+  hijack_cursor = false,
   hijack_unnamed_buffer_when_opening = false,
   sync_root_with_cwd = true,
   update_focused_file = {
@@ -15,14 +15,18 @@ require("nvim-tree").setup {
   view = {
     adaptive_size = false,
     side = "left",
-    width = 30,
-    hide_root_folder = false,
+    width = 35,
+    -- hide_root_folder = false,
     preserve_window_proportions = true,
   },
   git = {
-    enable = false,
-    ignore = true,
+    enable = true,
+    ignore = false,
+    timeout = 500,
   },
+  -- open_on_setup        = true,
+  auto_reload_on_write = true,
+
   filesystem_watchers = {
     enable = true,
   },

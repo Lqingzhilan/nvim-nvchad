@@ -59,22 +59,23 @@ require("lspconfig")["clangd"].setup {
   capabilities = M.capabilities,
   cmd = {
     "/usr/bin/clangd",
-    -- "--background-index",
-    "-j=24",
-    -- "--clang-tidy",
+    "--background-index",
+    "-j=16",
+    "--clang-tidy",
     -- 全局补全（会自动补充头文件）
     "--all-scopes-completion",
     -- 更详细的补全内容
     "--completion-style=detailed",
     -- 补充头文件的形式
     -- "--header-insertion=iwyu",
+    "--pretty",
     "--header-insertion=never",
-    "--header-insertion-decorators",
+    -- "--header-insertion-decorators",
     -- pch优化的位置
     "--pch-storage=memory",
+    "--cross-file-rename",
+    "--enable-config",
     -- "--offset-encoding=utf-16",
-    "--limit-references=0",
-    "--limit-results=0",
     -- "--rename-file-limit=0",
     -- "--log=verbose",
   },

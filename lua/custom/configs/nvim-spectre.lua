@@ -176,7 +176,7 @@ function M.config()
           find = {
               --pick one of item in find_engine
               cmd = "rg",
-              options = {"no-ignore-case"}
+              -- options = {"no-ignore-case"}
           },
           replace={
               --pick one of item in replace_engine

@@ -65,6 +65,8 @@ M.general = {
     ["<leader>b"] = { "<cmd> enew <CR>", "New buffer" },
     ["<leader>ch"] = { "<cmd> NvCheatsheet <CR>", "Mapping cheatsheet" },
 
+    ["<space>j"] = { "g;", "跳转到前一个修改点" },
+    ["<space>k"] = { "g,", "跳转到后一个修改点" },
     -- lspsaga
     ["[e"] = {
       function()
@@ -93,6 +95,7 @@ M.general = {
       end,
       "LSP formatting",
     },
+    ["<leader>r"] = { "<esc>:bufdo e <CR>", "Reload all files opened for clangd" },
   },
 
   t = {
@@ -298,10 +301,16 @@ M.nvimtree = {
 
   n = {
     -- toggle
-    ["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "Toggle nvimtree" },
+    -- ["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "Toggle nvimtree" },
 
     -- focus
-    ["<leader>e"] = { "<cmd> NvimTreeFocus <CR>", "Focus nvimtree" },
+    -- ["<leader>e"] = { "<cmd> NvimTreeFocus <CR>", "Focus nvimtree" },
+    -- open file vertical
+    ["<space>v"] = {
+      function()
+        require("nvim-tree.api").node.open.vertical()
+      end,
+    },
   },
 }
 
