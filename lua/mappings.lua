@@ -230,11 +230,6 @@ map("n", "<leader>vv",
   { desc = "New vertical term" }
 )
 
-
-map("n", "<leader>v", function()
-  require("nvchad.term").new { pos = "vsp" }
-end, { desc = "terminal new vertical window" })
-
 -- toggleable
 map({ "n", "t" }, "<A-v>", function()
   require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
@@ -352,4 +347,6 @@ map("n", "<leader>hs", ":<C-U>Gitsigns select_hunk<CR>")
 -- jump to function declaration
 map("n", "<F5>", vim.lsp.buf.declaration)
 
-
+-- diff two files
+map("n", "<space>d", ":windo diffthis<cr>", { desc = "diffthis files" })
+map("n", "<leader>d", ":windo diffoff<cr>", { desc = "cancle diffthis files" })
