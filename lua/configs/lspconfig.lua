@@ -97,7 +97,7 @@ M.defaults = function()
     capabilities = M.capabilities,
     cmd = {
       -- "/usr/bin/clangd",
-      "/home/Allen/.local/share/nvim/lsp_servers/clangd/clangd/bin/clangd",
+      "/home/Allen/.local/share/nvim/mason/packages/clangd/clangd_18.1.3/bin/clangd",
       "--background-index",
       "-j=16",
       "--clang-tidy",
