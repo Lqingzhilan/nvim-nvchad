@@ -1,11 +1,11 @@
 return {
-{
-    "stevearc/conform.nvim",
-    -- event = 'BufWritePre', -- uncomment for format on save
-    config = function()
-      require "configs.conform"
-    end,
-  },
+    {
+        "stevearc/conform.nvim",
+        -- event = 'BufWritePre', -- uncomment for format on save
+        config = function()
+            require "configs.conform"
+        end,
+    },
 
     {
         "NvChad/base46",
@@ -320,6 +320,14 @@ return {
             require("lsp_signature").setup()
         end,
         lazy = false,
+    },
+    {
+        -- 自动格式化
+        "Chiel92/vim-autoformat",
+    },
+    {
+        -- 16进制工具
+        "RaafatTurki/hex.nvim",
     },
     -- {
     --   "jackMort/ChatGPT.nvim",

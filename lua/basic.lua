@@ -79,3 +79,5 @@ vim.o.shortmess       = vim.o.shortmess .. 'c'
 -- vim.o.showtabline     = 2
 -- 使用增强状态栏插件后不再需要 vim 的模式提示
 vim.o.showmode        = false
+-- 配置 Python 格式化器为 black  
+vim.g.autoformat_formatter_python = 'black'
