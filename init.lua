@@ -37,3 +37,14 @@ require "nvchad.autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+-- 使用 CursorHold 自动显示 hover 文档
+vim.api.nvim_create_autocmd("CursorHold", {
+  pattern = "*",
+  callback = function()
+    vim.cmd("Lspsaga hover_doc")
+  end,
+})
+
+-- 可选：设置 hover 显示的时间
+vim.o.updatetime = 300  -- 光标停止300ms后触发CursorHold事件

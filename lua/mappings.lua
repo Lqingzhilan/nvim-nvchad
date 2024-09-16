@@ -153,9 +153,10 @@ map("n", "<C-p>",
 map("n", "<F6>",
   function()
     require("telescope.builtin").grep_string {
-      layout_config = { height = 0.99, width = 0.99 },
-      path_display = { "smart" },
-      fname_width = 70,
+      -- layout_strategy = "vertical",
+      layout_config = { height = 0.99, preview_cutoff = 60, width = 0.99 },
+      -- path_display = { "smart" },
+      -- fname_width = 70,
       file_ignore_patterns = {
         "tags",
       }
@@ -165,9 +166,10 @@ map("n", "<F6>",
 map("n", "<F7>",
   function()
     require("telescope.builtin").lsp_references {
-      layout_config = { height = 0.95, width = 0.99 },
-      path_display = { "smart" },
-      fname_width = 70,
+      -- layout_strategy = "vertical",
+      layout_config = { height = 0.99, preview_cutoff = 60, width = 0.99 },
+      -- path_display = { "smart" },
+      -- fname_width = 70,
     }
   end
 )
@@ -176,8 +178,8 @@ map("n", "<leader>gs",
   function()
     require("telescope.builtin").git_status {
       layout_config = { height = 0.99, width = 0.99 },
-      path_display = { "smart" },
-      fname_width = 80,
+      -- path_display = { "smart" },
+      -- fname_width = 80,
     }
   end
 )
