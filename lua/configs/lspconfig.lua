@@ -96,8 +96,7 @@ M.defaults = function()
         -- on_attach = M.on_attach,
         capabilities = M.capabilities,
         cmd = {
-            -- "/usr/bin/clangd",
-            "/home/Allen/.local/share/nvim/mason/packages/clangd/clangd_18.1.3/bin/clangd",
+            "clangd",
             "--background-index",
             "-j=16",
             "--clang-tidy",
