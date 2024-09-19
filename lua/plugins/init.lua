@@ -357,6 +357,11 @@ return {
         },
         config = function(_, opts) require('litee.calltree').setup(opts) end
     },
+    {
+        'HiPhish/rainbow-delimiters.nvim',
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        lazy = false,
+    },
     -- {
     --   "jackMort/ChatGPT.nvim",
     --   event = "VeryLazy",
