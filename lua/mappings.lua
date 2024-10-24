@@ -324,13 +324,6 @@ map("n", "<leader>td",
   { desc = "Toggle deleted" }
 )
 
-map("n", "<leader>gd",
-  function()
-    require("gitsigns").diffthis()
-  end,
-  { desc = "Toggle deleted" }
-)
-
 -- session manager
 map("n", "<leader>sl", ":SessionManager load_session <CR>", { desc = "SessionManager load_session"})
 map("n", "<leader>sd", ":SessionManager delete_session<cr>")
@@ -343,7 +336,8 @@ map("n", "<leader>hc", ":Gitsigns preview_hunk<cr>")
 map("n", "<leader>hr", ":Gitsigns reset_hunk<cr>")
 map("n", "<leader>hR", ":Gitsigns reset_buffer")
 map("n", "<leader>hb", ":Gitsigns blame_line<cr>")
-map("n", "<leader>gd", ":Gitsigns diffthis<cr>")
+-- map("n", "<leader>gd", ":Gitsigns diffthis<cr>")
+map('n', '<leader>gd', ':Gitsigns diffthis<CR>:wincmd L<CR>', { noremap = true, silent = true })
 map("n", "<leader>hs", ":<C-U>Gitsigns select_hunk<CR>")
 
 -- jump to function declaration

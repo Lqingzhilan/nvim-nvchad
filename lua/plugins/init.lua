@@ -2,33 +2,13 @@ return {
     {
         "stevearc/conform.nvim",
         -- event = 'BufWritePre', -- uncomment for format on save
-        config = function()
-            require "configs.conform"
-        end,
+        opts = require "configs.conform",
     },
-
-    {
-        "NvChad/base46",
-        branch = "v2.5",
-        build = function()
-            require("base46").load_all_highlights()
-        end,
-    },
-
-    {
-        "NvChad/ui",
-        branch = "v2.5",
-        lazy = false,
-        config = function()
-            require "nvchad"
-        end,
-    },
-
     {
         "nvim-tree/nvim-web-devicons",
-        opts = function()
-            return { override = require "nvchad.icons.devicons" }
-        end,
+        -- opts = function()
+        --     return { override = require "nvchad.icons.devicons" }
+        -- end,
         config = function(_, opts)
             dofile(vim.g.base46_cache .. "devicons")
             require("nvim-web-devicons").setup(opts)
@@ -73,15 +53,27 @@ return {
 
     {
         "folke/which-key.nvim",
-        keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
+        event = "VeryLazy",
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        },
         cmd = "WhichKey",
-        config = function(_, opts)
-            dofile(vim.g.base46_cache .. "whichkey")
-            require("which-key").setup(opts)
-        end,
+        keys = {
+            {
+                "<leader>?",
+                function()
+                    require("which-key").show({ global = false })
+                end,
+                desc = "Buffer Local Keymaps (which-key)",
+            },
+        },
     },
 
-    "nvim-lua/plenary.nvim",
+    {
+        "nvim-lua/plenary.nvim",
+    },
 
     -- formatting!
     {
@@ -99,7 +91,7 @@ return {
     -- git stuff
     {
         "lewis6991/gitsigns.nvim",
-        event = "User FilePost",
+        -- event = "User FilePost",
         opts = function()
             return require "configs.gitsigns"
         end,
@@ -118,9 +110,9 @@ return {
         config = function(_, opts)
             require("mason").setup(opts)
 
-            vim.api.nvim_create_user_command("MasonInstallAll", function()
-                require("nvchad.mason").install_all(opts.ensure_installed)
-            end, {})
+            -- vim.api.nvim_create_user_command("MasonInstallAll", function()
+            --     require("nvchad.mason").install_all(opts.ensure_installed)
+            -- end, {})
         end,
     },
 
@@ -135,16 +127,6 @@ return {
     {
         "neovim/nvim-lspconfig",
         event = "User FilePost",
-        -- dependencies = {
-        --   -- format & linting
-        --   {
-        --     "jose-elias-alvarez/null-ls.nvim",
-        --     config = function()
-        --       require "configs.null-ls"
-        --     end,
-        --   },
-        -- },
-
         config = function()
             require("configs.lspconfig").defaults()
         end,
@@ -217,19 +199,19 @@ return {
         end,
     },
 
-    {
-        "NvChad/nvim-colorizer.lua",
-        event = "User FilePost",
-        opts = { user_default_options = { names = false } },
-        config = function(_, opts)
-            require("colorizer").setup(opts)
+    --{
+    --    "NvChad/nvim-colorizer.lua",
+    --    event = "User FilePost",
+    --    opts = { user_default_options = { names = false } },
+    --    config = function(_, opts)
+    --        require("colorizer").setup(opts)
 
-            -- execute colorizer as soon as possible
-            vim.defer_fn(function()
-                require("colorizer").attach_to_buffer(0)
-            end, 0)
-        end,
-    },
+    --        -- execute colorizer as soon as possible
+    --        vim.defer_fn(function()
+    --            require("colorizer").attach_to_buffer(0)
+    --        end, 0)
+    --    end,
+    --},
 
     {
         "nvim-treesitter/nvim-treesitter",
@@ -255,11 +237,10 @@ return {
 
     {
         "glepnir/lspsaga.nvim",
-        -- event = "InsertEnter",
-        -- cmd = { "Lspsaga" },
         branch = "main",
         config = function()
-            require("lspsaga").setup()
+            -- require("lspsaga").setup()
+            require "configs.lspsaga"
         end,
         lazy = false,
     },
@@ -312,11 +293,7 @@ return {
     {
         -- 函数参数提示
         "ray-x/lsp_signature.nvim",
-        -- event = "VeryLazy",
-        -- opts = {},
-        -- config = function(_, opts)
         config = function()
-            -- require("lsp_signature").setup(opts)
             require("lsp_signature").setup()
         end,
         lazy = false,
@@ -362,41 +339,4 @@ return {
         dependencies = { "nvim-treesitter/nvim-treesitter" },
         lazy = false,
     },
-    -- {
-    --   "jackMort/ChatGPT.nvim",
-    --   event = "VeryLazy",
-    --   config = function()
-    --     require("chatgpt").setup()
-    --   end,
-    --   dependencies = {
-    --     "MunifTanjim/nui.nvim",
-    --     "nvim-lua/plenary.nvim",
-    --     "nvim-telescope/telescope.nvim",
-    --   },
-    -- },
-    -- {
-    --     "simrat39/rust-tools.nvim",
-    --     lazy = false,
-    -- },
-    -- {
-    --     "sainnhe/edge",
-    --     config = function()
-    --       require "configs.theme"
-    --     end,
-    --     lazy = false,
-    -- },
-    -- To make a plugin not be loaded
-    -- {
-    --   "NvChad/nvim-colorizer.lua",
-    --   enabled = false
-    -- },
-
-    -- All NvChad plugins are lazy-loaded by default
-    -- For a plugin to be loaded, you will need to set either `ft`, `cmd`, `keys`, `event`, or set `lazy = false`
-    -- If you want a plugin to load on startup, add `lazy = false` to a plugin spec, for example
-    -- {
-    --   "mg979/vim-visual-multi",
-    --   lazy = false,
-    -- }
-
 }
