@@ -339,4 +339,9 @@ return {
         dependencies = { "nvim-treesitter/nvim-treesitter" },
         lazy = false,
     },
+    {
+        -- 显示git diff差异
+        "sindrets/diffview.nvim",
+        lazy = false,
+    }
 }

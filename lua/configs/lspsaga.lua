@@ -1,7 +1,7 @@
 local saga = require('lspsaga')
 
 saga.setup({
-    hover = {
+    hover_doc = {
         border = 'rounded', -- 边框样式
         max_height = 20,    -- 窗口最大高度
         max_width = 80,     -- 窗口最大宽度

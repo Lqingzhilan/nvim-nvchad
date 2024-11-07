@@ -17,10 +17,7 @@ map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "file save" })
 map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "file copy whole" })
 
-map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "toggle line number" })
-map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "toggle relative number" })
-map("n", "<leader>ch", "<cmd>NvCheatsheet<CR>", { desc = "toggle nvcheatsheet" })
-    -- 配置拷贝字符串（变量名、函数名等） 配置拷贝字符串（变量名、函数名等）
+map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "toggle line number" }) map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "toggle relative number" }) map("n", "<leader>ch", "<cmd>NvCheatsheet<CR>", { desc = "toggle nvcheatsheet" }) -- 配置拷贝字符串（变量名、函数名等） 配置拷贝字符串（变量名、函数名等）
 map("n", "<C-y>", "viwy", { desc = "Copy string" })
 -- 选中全文
 map("n", "<C-a>", "ggVG", { desc = "select whole file" })
