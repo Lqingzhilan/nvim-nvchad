@@ -23,5 +23,3 @@ vim.api.nvim_create_autocmd("CursorHold", {
     end,
 })
 
--- 可选：设置 hover 显示的时间
-vim.o.updatetime = 800 -- 光标停止300ms后触发CursorHold事件

@@ -36,3 +36,4 @@ vim.schedule(function()
   require "mappings"
 end)
 
+vim.o.updatetime      = 1000
