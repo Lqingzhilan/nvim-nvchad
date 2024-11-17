@@ -1,11 +1,11 @@
 local map = vim.keymap.set
 
-map("i", "<C-b>", "<ESC>^i", { desc = "move beginning of line" })
-map("i", "<C-e>", "<End>", { desc = "move end of line" })
-map("i", "<C-h>", "<Left>", { desc = "move left" })
-map("i", "<C-l>", "<Right>", { desc = "move right" })
-map("i", "<C-j>", "<Down>", { desc = "move down" })
-map("i", "<C-k>", "<Up>", { desc = "move up" })
+map("i", "<C-b>", "<ESC>^i", { desc = "插入模式跳转到行首(move beginning of line in insert mode)" })
+map("i", "<C-e>", "<End>", { desc = "插入模式跳转到行尾(move end of line in insert mode)" })
+map("i", "<C-h>", "<Left>", { desc = "插入模式左移(move left)" })
+map("i", "<C-l>", "<Right>", { desc = "插入模式右移(move right)" })
+map("i", "<C-j>", "<Down>", { desc = "插入模式向下移动(move down)" })
+map("i", "<C-k>", "<Up>", { desc = "插入模式向上移动(move up)" })
 
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "general clear highlights" })
 
@@ -17,7 +17,10 @@ map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "file save" })
 map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "file copy whole" })
 
-map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "toggle line number" }) map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "toggle relative number" }) map("n", "<leader>ch", "<cmd>NvCheatsheet<CR>", { desc = "toggle nvcheatsheet" }) -- 配置拷贝字符串（变量名、函数名等） 配置拷贝字符串（变量名、函数名等）
+map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "toggle line number" })
+map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "toggle relative number" })
+map("n", "<leader>ch", "<cmd>NvCheatsheet<CR>", { desc = "toggle nvcheatsheet" })
+-- 配置拷贝字符串（变量名、函数名等） 配置拷贝字符串（变量名、函数名等）
 map("n", "<C-y>", "viwy", { desc = "Copy string" })
 -- 选中全文
 map("n", "<C-a>", "ggVG", { desc = "select whole file" })
@@ -34,61 +37,66 @@ map("n", "<F8>", "<cmd> lua require'mywords'.hl_toggle() <CR>", { desc = "高亮
 map("n", "<F9>", "<cmd> bprevious <CR>", { desc = "vim前一个缓冲区文件" })
 map("n", "<F10>", "<cmd> bnext <CR>", { desc = "vim后一个缓冲区文件" })
 map("n", "<leader>S", "<cmd> lua require('spectre').open() <CR>", { desc = "open spectre" })
-map("n", "<leader>sr", "<cmd> lua require('spectre').open_visual({select_word=true}) <CR>", { desc = "find current string" })
+map("n", "<leader>sr", "<cmd> lua require('spectre').open_visual({select_word=true}) <CR>",
+    { desc = "find current string" })
 -- map("n", "<leader>s", "<esc>:lua require('spectre').open_visual() <CR>", { desc = "open visual spectre" })
 map("n", "<leader>sf", "viw:lua require('spectre').open_file_search() <CR>", { desc = "find in current file" })
 map("n", "<space>j", "g;", { desc = "跳转到前一个修改点" })
 map("n", "<space>k", "g,", { desc = "跳转到后一个修改点" })
 -- lspsaga
 map("n", "[e",
-  function()
-    require("lspsaga.diagnostic"):goto_prev ({ severity = vim.diagnostic.severity.ERROR })
-  end
+    function()
+        require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+    end,
+    { desc = "前一个错误位置" }
 )
 map("n", "]e",
-  function()
-    require("lspsaga.diagnostic"):goto_next ({ severity = vim.diagnostic.severity.ERROR })
-  end
+    function()
+        require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+    end,
+    { desc = "下一个错误位置" }
 )
 map("n", "[w",
-  function()
-    require("lspsaga.diagnostic"):goto_prev ({ severity = vim.diagnostic.severity.WARN })
-  end
+    function()
+        require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.WARN })
+    end,
+    { desc = "前一个警告位置" }
 )
 map("n", "]w",
-  function()
-    require("lspsaga.diagnostic"):goto_next ({ severity = vim.diagnostic.severity.WARN })
-  end
+    function()
+        require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.WARN })
+    end,
+    { desc = "下一个警告位置" }
 )
 map("n", "<F12>", "<cmd> Lspsaga code_action <CR>", { desc = "lspsaga code action" })
 map("n", "<leader>f",
-  function()
-    vim.lsp.buf.format ({ async = true })
-  end,
-  { desc = "LSP formatting" }
+    function()
+        vim.lsp.buf.format({ async = true })
+    end,
+    { desc = "lsp格式化，LSP formatting" }
 )
 map("n", "<leader>r", "<esc>:bufdo e <CR>", { desc = "Reload all files opened for clangd" })
 
 map("t", "<C-e>", vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), { desc = "Escape terminal mode" })
 
 map("n", "<F5>",
-   function()
-     vim.lsp.buf.declaration()
-   end,
-   { desc = "LSP declaration" }
+    function()
+        vim.lsp.buf.declaration()
+    end,
+    { desc = "LSP declaration" }
 )
 
 map("n", "<C-]>",
-   function()
-     vim.lsp.buf.definition()
-   end,
-   { desc = "LSP definition" }
+    function()
+        vim.lsp.buf.definition()
+    end,
+    { desc = "LSP definition" }
 )
 
 
-map("n", "<leader>fm", function()
-  require("conform").format { lsp_fallback = true }
-end, { desc = "format files" })
+--map("n", "<leader>fm", function()
+--    require("conform").format { lsp_fallback = true }
+--end, { desc = "format files" })
 
 -- global lsp mappings
 map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "lsp diagnostic loclist" })
@@ -97,28 +105,29 @@ map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "lsp diagnostic locli
 map("n", "<leader>b", "<cmd>enew<CR>", { desc = "buffer new" })
 
 map("n", "<tab>", function()
-  require("nvchad.tabufline").next()
+    require("nvchad.tabufline").next()
 end, { desc = "buffer goto next" })
 
 map("n", "<S-tab>", function()
-  require("nvchad.tabufline").prev()
+    require("nvchad.tabufline").prev()
 end, { desc = "buffer goto prev" })
 
 map("n", "<leader>x", function()
-  require("nvchad.tabufline").close_buffer()
+    require("nvchad.tabufline").close_buffer()
 end, { desc = "buffer close" })
 
 -- Comment
-map("n", "<leader>/", "gcc", { desc = "comment toggle", remap = true })
-map("v", "<leader>/", "gc", { desc = "comment toggle", remap = true })
+map("n", "<space>/", "gcc", { desc = "注释该行(comment toggle)", remap = true })
+-- map("v", "<leader>/", "gc", { desc = "comment toggle", remap = true })
 
 -- nvimtree
-map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
+-- map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
 map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
- map("n", "<space>v",
-   function()
-     require("nvim-tree.api").node.open.vertical()
-   end
+map("n", "<space>v",
+    function()
+        require("nvim-tree.api").node.open.vertical()
+    end,
+    { desc = "纵向打开新的文件" }
 )
 
 -- telescope
@@ -134,51 +143,55 @@ map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidd
 map("n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "telescope nvchad themes" })
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 map(
-  "n",
-  "<leader>fa",
-  "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-  { desc = "telescope find all files" }
+    "n",
+    "<leader>fa",
+    "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
+    { desc = "telescope find all files" }
 )
 map("n", "<C-p>",
-  function()
-    require("telescope.builtin").find_files {
-      layout_strategy = "vertical",
-      layout_config = { height = 0.9, preview_cutoff = 60, prompt_position = "bottom", width = 0.9 }
-    }
-  end
+    function()
+        require("telescope.builtin").find_files {
+            layout_strategy = "vertical",
+            layout_config = { height = 0.9, preview_cutoff = 60, prompt_position = "bottom", width = 0.9 }
+        }
+    end,
+    { desc = "打开文件搜索窗口" }
 )
 map("n", "<F6>",
-  function()
-    require("telescope.builtin").grep_string {
-      -- layout_strategy = "vertical",
-      layout_config = { height = 0.99, preview_cutoff = 60, width = 0.99 },
-      -- path_display = { "smart" },
-      -- fname_width = 70,
-      file_ignore_patterns = {
-        "tags",
-      }
-    }
-  end
+    function()
+        require("telescope.builtin").grep_string {
+            -- layout_strategy = "vertical",
+            layout_config = { height = 0.99, preview_cutoff = 60, width = 0.99 },
+            -- path_display = { "smart" },
+            -- fname_width = 70,
+            file_ignore_patterns = {
+                "tags",
+            }
+        }
+    end,
+    { desc = "搜索当前光标下字符串" }
 )
 map("n", "<F7>",
-  function()
-    require("telescope.builtin").lsp_references {
-      -- layout_strategy = "vertical",
-      layout_config = { height = 0.99, preview_cutoff = 60, width = 0.99 },
-      -- path_display = { "smart" },
-      -- fname_width = 70,
-    }
-  end
+    function()
+        require("telescope.builtin").lsp_references {
+            -- layout_strategy = "vertical",
+            layout_config = { height = 0.99, preview_cutoff = 60, width = 0.99 },
+            -- path_display = { "smart" },
+            -- fname_width = 70,
+        }
+    end,
+    { desc = "搜索当前光标下函数被哪些调用" }
 )
 -- map("n", "<leader>gs", "<cmd> Telescope git_status <CR>", "Git status" )
 map("n", "<leader>gs",
-  function()
-    require("telescope.builtin").git_status {
-      layout_config = { height = 0.99, width = 0.99 },
-      -- path_display = { "smart" },
-      -- fname_width = 80,
-    }
-  end
+    function()
+        require("telescope.builtin").git_status {
+            layout_config = { height = 0.99, width = 0.99 },
+            -- path_display = { "smart" },
+            -- fname_width = 80,
+        }
+    end,
+    { desc = "列出git状态变化的所有文件" }
 )
 
 -- theme switcher
@@ -189,156 +202,151 @@ map("t", "<C-x>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
 
 -- new terminals
 map("n", "<leader>h", function()
-  require("nvchad.term").new { pos = "sp" }
+    require("nvchad.term").new { pos = "sp" }
 end, { desc = "terminal new horizontal term" })
 
 -- nvterm
 map("n", "<leader>h",
-  function()
-    require("nvterm.terminal").toggle "horizontal"
-  end,
-  { desc = "Toggle horizontal term" }
+    function()
+        require("nvterm.terminal").toggle "horizontal"
+    end,
+    { desc = "Toggle horizontal term" }
 )
 
 map("n", "<leader>v",
-  function()
-    require("nvterm.terminal").toggle "vertical"
-  end,
-  { desc = "Toggle vertical term" }
+    function()
+        require("nvterm.terminal").toggle "vertical"
+    end,
+    { desc = "Toggle vertical term" }
 )
 
 map("n", "<leader>tt",
-  function()
-    require("nvterm.terminal").toggle "tab"
-  end,
-  { desc = "Toggle exit term" }
+    function()
+        require("nvterm.terminal").toggle "tab"
+    end,
+    { desc = "Toggle exit term" }
 )
 
 -- new
 map("n", "<leader>hh",
-  function()
-    require("nvterm.terminal").new "horizontal"
-  end,
-  { desc = "New horizontal term" }
+    function()
+        require("nvterm.terminal").new "horizontal"
+    end,
+    { desc = "New horizontal term" }
 )
 
 map("n", "<leader>vv",
-  function()
-    require("nvterm.terminal").new "vertical"
-  end,
-  { desc = "New vertical term" }
+    function()
+        require("nvterm.terminal").new "vertical"
+    end,
+    { desc = "New vertical term" }
 )
 
 -- toggleable
 map({ "n", "t" }, "<A-v>", function()
-  require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
+    require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
 end, { desc = "terminal toggleable vertical term" })
 
 map({ "n", "t" }, "<A-h>", function()
-  require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
+    require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
 end, { desc = "terminal new horizontal term" })
 
 map({ "n", "t" }, "<A-i>", function()
-  require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+    require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
 end, { desc = "terminal toggle floating term" })
 
 -- whichkey
-map("n", "<leader>wK", "<cmd>WhichKey <CR>", { desc = "whichkey all keymaps" })
+map("n", "<leader>wk", "<cmd>WhichKey <CR>", { desc = "whichkey all keymaps" })
 
-map("n", "<leader>wk", function()
-  vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
-end, { desc = "whichkey query lookup" })
+-- map("n", "<leader>wk", function()
+--     vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
+-- end, { desc = "whichkey query lookup" })
 
 -- blankline
 map("n", "<leader>cc", function()
-  local config = { scope = {} }
-  config.scope.exclude = { language = {}, node_type = {} }
-  config.scope.include = { node_type = {} }
-  local node = require("ibl.scope").get(vim.api.nvim_get_current_buf(), config)
+    local config = { scope = {} }
+    config.scope.exclude = { language = {}, node_type = {} }
+    config.scope.include = { node_type = {} }
+    local node = require("ibl.scope").get(vim.api.nvim_get_current_buf(), config)
 
-  if node then
-    local start_row, _, end_row, _ = node:range()
-    if start_row ~= end_row then
-      vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start_row + 1, 0 })
-      vim.api.nvim_feedkeys("_", "n", true)
+    if node then
+        local start_row, _, end_row, _ = node:range()
+        if start_row ~= end_row then
+            vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start_row + 1, 0 })
+            vim.api.nvim_feedkeys("_", "n", true)
+        end
     end
-  end
 end, { desc = "blankline jump to current context" })
 
 -- gitsigns
 map("n", "]c",
-  function()
-    if vim.wo.diff then
-      return "]c"
-    end
-    vim.schedule(function()
-      require("gitsigns").next_hunk()
-    end)
-    return "<Ignore>"
-  end,
-  { desc = "Jump to next hunk" }
+    function()
+        if vim.wo.diff then
+            return "]c"
+        end
+        vim.schedule(function()
+            require("gitsigns").next_hunk()
+        end)
+        return "<Ignore>"
+    end,
+    { desc = "跳转到下一个代码修改块(Jump to next hunk)" }
 )
 
 map("n", "[c",
-  function()
-    if vim.wo.diff then
-      return "[c"
-    end
-    vim.schedule(function()
-      require("gitsigns").prev_hunk()
-    end)
-    return "<Ignore>"
-  end,
-  { desc = "Jump to prev hunk" }
+    function()
+        if vim.wo.diff then
+            return "[c"
+        end
+        vim.schedule(function()
+            require("gitsigns").prev_hunk()
+        end)
+        return "<Ignore>"
+    end,
+    { desc = "跳转到前一个代码修改块(Jump to prev hunk)" }
 )
 
 -- Actions
 map("n", "<leader>rh",
-  function()
-    require("gitsigns").reset_hunk()
-  end,
-  { desc = "Reset hunk" }
+    function()
+        require("gitsigns").reset_hunk()
+    end,
+    { desc = "Reset hunk" }
 )
 
 map("n", "<leader>ph",
-  function()
-    require("gitsigns").preview_hunk()
-  end,
-  { desc = "Preview hunk" }
+    function()
+        require("gitsigns").preview_hunk()
+    end,
+    { desc = "Preview hunk" }
 )
 
 map("n", "<leader>gb",
-  function()
-    package.loaded.gitsigns.blame_line()
-  end,
-  { desc = "Blame line" }
+    function()
+        package.loaded.gitsigns.blame_line()
+    end,
+    { desc = "该行代码修改记录(Blame line)" }
 )
 
 map("n", "<leader>td",
-  function()
-    require("gitsigns").toggle_deleted()
-  end,
-  { desc = "Toggle deleted" }
+    function()
+        require("gitsigns").toggle_deleted()
+    end,
+    { desc = "Toggle deleted" }
 )
 
 -- session manager
-map("n", "<leader>sl", ":SessionManager load_session <CR>", { desc = "SessionManager load_session"})
-map("n", "<leader>sd", ":SessionManager delete_session<cr>")
-map("n", "<F4>", '/<C-R>=expand("<cword>")<CR><CR>')
+map("n", "<leader>sl", ":SessionManager load_session <CR>", { desc = "SessionManager load_session" })
+map("n", "<leader>sd", ":SessionManager delete_session<cr>", { desc = "删除session" })
+map("n", "<F4>", '/<C-R>=expand("<cword>")<CR><CR>', { desc = "高亮当前字符串并跳转到下一个" })
 
 -- h: git
-map("n", "<leader>hu", ":Gitsigns undo_stage_hunk<cr>")
-map("n", "<leader>hn", ":Gitsigns next_hunk<cr>")
-map("n", "<leader>hc", ":Gitsigns preview_hunk<cr>")
-map("n", "<leader>hr", ":Gitsigns reset_hunk<cr>")
-map("n", "<leader>hR", ":Gitsigns reset_buffer")
-map("n", "<leader>hb", ":Gitsigns blame_line<cr>")
+-- map("n", "<leader>hu", ":Gitsigns undo_stage_hunk<cr>", { desc = "" })
 -- map("n", "<leader>gd", ":Gitsigns diffthis<cr>")
-map('n', '<leader>gd', ':Gitsigns diffthis<CR>:wincmd L<CR>', { noremap = true, silent = true })
-map("n", "<leader>hs", ":<C-U>Gitsigns select_hunk<CR>")
+map('n', '<leader>gd', ':Gitsigns diffthis<CR>:wincmd L<CR>', { noremap = true, silent = true }, { desc = "git diff当前文件" })
+-- map("n", "<leader>hs", ":<C-U>Gitsigns select_hunk<CR>")
 
 -- jump to function declaration
-map("n", "<F5>", vim.lsp.buf.declaration)
+map("n", "<F5>", vim.lsp.buf.declaration, { desc = "跳转声明处" })
 
 -- diff two files
 map("n", "<space>d", ":windo diffthis<cr>", { desc = "diffthis files" })
