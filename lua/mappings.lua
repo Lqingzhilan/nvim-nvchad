@@ -334,6 +334,12 @@ map("n", "<leader>td",
     { desc = "Toggle deleted" }
 )
 
+map("n", "<leader>gd",
+    function()
+        require("gitsigns").diffthis('~')
+    end,
+    { desc = "git diff当前文件" }
+)
 -- session manager
 map("n", "<leader>sl", ":SessionManager load_session <CR>", { desc = "SessionManager load_session" })
 map("n", "<leader>sd", ":SessionManager delete_session<cr>", { desc = "删除session" })
@@ -341,8 +347,6 @@ map("n", "<F4>", '/<C-R>=expand("<cword>")<CR><CR>', { desc = "高亮当前字�
 
 -- h: git
 -- map("n", "<leader>hu", ":Gitsigns undo_stage_hunk<cr>", { desc = "" })
--- map("n", "<leader>gd", ":Gitsigns diffthis<cr>")
-map('n', '<leader>gd', ':Gitsigns diffthis<CR>:wincmd L<CR>', { noremap = true, silent = true }, { desc = "git diff当前文件" })
 -- map("n", "<leader>hs", ":<C-U>Gitsigns select_hunk<CR>")
 
 -- jump to function declaration
