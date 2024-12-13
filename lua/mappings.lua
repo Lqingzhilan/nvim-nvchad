@@ -26,6 +26,8 @@ map("n", "<C-y>", "viwy", { desc = "Copy string" })
 map("n", "<C-a>", "ggVG", { desc = "select whole file" })
 -- 选中光标所在的字符串
 map("n", "ff", "viw", { desc = "select current string" })
+-- 粘贴
+map('x', 'p', '"_dP', { noremap = true, silent = true, desc = "粘贴" })
 -- 重新映射C-V
 map("n", "vv", "<C-V>", { desc = "vertical view mode" })
 map("n", "<F2>", "<cmd> NvimTreeToggle <CR>", { desc = "list directory tree" })
@@ -75,6 +77,14 @@ map("n", "<leader>f",
     end,
     { desc = "lsp格式化，LSP formatting" }
 )
+
+map("v", "f",
+    function()
+        vim.lsp.buf.format({ async = true })
+    end,
+    { desc = "视图模式lsp格式化" }
+)
+
 map("n", "<leader>r", "<esc>:bufdo e <CR>", { desc = "Reload all files opened for clangd" })
 
 map("t", "<C-e>", vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), { desc = "Escape terminal mode" })
