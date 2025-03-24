@@ -99,6 +99,7 @@ function M.config()
             '--with-filename',
             '--line-number',
             '--column',
+            '-F',
           } ,
           options = {
             -- ['ignore-case'] = {

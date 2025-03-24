@@ -107,12 +107,14 @@ M.defaults = function()
             -- 补充头文件的形式
             -- "--header-insertion=iwyu",
             "--pretty",
-            "--header-insertion=never",
-            -- "--header-insertion-decorators",
+            -- "--header-insertion=never",
+            "--header-insertion-decorators=0",
             -- pch优化的位置
             "--pch-storage=memory",
             "--cross-file-rename",
             "--enable-config",
+            -- "--fallback-style=none",
+            -- "--style=file:/home/Allen/.clang-format",
             -- "--offset-encoding=utf-16",
             -- "--rename-file-limit=0",
             -- "--log=verbose",

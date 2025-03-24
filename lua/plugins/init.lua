@@ -14,7 +14,7 @@ return {
             require("nvim-web-devicons").setup(opts)
         end,
     },
-
+    
     {
         "lukas-reineke/indent-blankline.nvim",
         event = "User FilePost",
@@ -71,10 +71,9 @@ return {
         },
     },
 
-    {
-        "nvim-lua/plenary.nvim",
-    },
-
+    -- {
+    --     "nvim-lua/plenary.nvim",
+    -- },
     -- formatting!
     {
         "stevearc/conform.nvim",
@@ -338,8 +337,32 @@ return {
         -- use opts = {} for passing setup options
         -- this is equivalent to setup({}) function
     },
-    -- {
-    --     'jiangmiao/auto-pairs',
-    --     lazy = false,
-    -- },
+    {
+        "Dan7h3x/chatter.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            "ibhagwan/fzf-lua",
+        },
+        keys = { {
+            "<leader>cs", "<Cmd>ChatterStart<CR>", desc = "Chatter Start"
+        }, },
+        config = function()
+            require('chatter').setup({
+                offline_api_url = os.getenv("OLLAMA_HOST") or "http://localhost:11434",
+                sidebar_width = 60,
+                sidebar_height = vim.o.lines - 12,
+                models = {},
+                highlight = {
+                    title = "Title",
+                    user = "Comment",
+                    assistant = "String",
+                    system = "Type",
+                    error = "ErrorMsg",
+                    loading = "WarningMsg",
+                }
+            })
+        end,
+    },
 }
+
