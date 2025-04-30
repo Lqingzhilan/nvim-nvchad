@@ -14,7 +14,7 @@ return {
             require("nvim-web-devicons").setup(opts)
         end,
     },
-    
+
     {
         "lukas-reineke/indent-blankline.nvim",
         event = "User FilePost",
@@ -364,5 +364,27 @@ return {
             })
         end,
     },
+    {
+        "olimorris/codecompanion.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        config = function()
+            require("configs.ai.codecompanion.codecompanion")
+        end,
+        lazy = false,
+    },
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        ft = { "markdown", "codecompanion" },
+    },
+    -- fidget.nvim
+    {
+        "j-hui/fidget.nvim",
+        -- tag = "legacy",
+        config = function()
+            require("fidget").setup()
+        end,
+    },
 }
-
