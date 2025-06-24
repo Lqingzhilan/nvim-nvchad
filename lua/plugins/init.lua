@@ -337,33 +337,33 @@ return {
         -- use opts = {} for passing setup options
         -- this is equivalent to setup({}) function
     },
-    {
-        "Dan7h3x/chatter.nvim",
-        event = "VeryLazy",
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            "ibhagwan/fzf-lua",
-        },
-        keys = { {
-            "<leader>cs", "<Cmd>ChatterStart<CR>", desc = "Chatter Start"
-        }, },
-        config = function()
-            require('chatter').setup({
-                offline_api_url = os.getenv("OLLAMA_HOST") or "http://localhost:11434",
-                sidebar_width = 60,
-                sidebar_height = vim.o.lines - 12,
-                models = {},
-                highlight = {
-                    title = "Title",
-                    user = "Comment",
-                    assistant = "String",
-                    system = "Type",
-                    error = "ErrorMsg",
-                    loading = "WarningMsg",
-                }
-            })
-        end,
-    },
+    -- {
+    --     "Dan7h3x/chatter.nvim",
+    --     event = "VeryLazy",
+    --     dependencies = {
+    --         'nvim-lua/plenary.nvim',
+    --         "ibhagwan/fzf-lua",
+    --     },
+    --     keys = { {
+    --         "<leader>cs", "<Cmd>ChatterStart<CR>", desc = "Chatter Start"
+    --     }, },
+    --     config = function()
+    --         require('chatter').setup({
+    --             offline_api_url = os.getenv("OLLAMA_HOST") or "http://localhost:11434",
+    --             sidebar_width = 60,
+    --             sidebar_height = vim.o.lines - 12,
+    --             models = {},
+    --             highlight = {
+    --                 title = "Title",
+    --                 user = "Comment",
+    --                 assistant = "String",
+    --                 system = "Type",
+    --                 error = "ErrorMsg",
+    --                 loading = "WarningMsg",
+    --             }
+    --         })
+    --     end,
+    -- },
     {
         "olimorris/codecompanion.nvim",
         dependencies = {
@@ -386,5 +386,29 @@ return {
         config = function()
             require("fidget").setup()
         end,
+    },
+-- Custom configuration (defaults shown)
+    {
+      'jacob411/Ollama-Copilot',
+      opts = {
+        -- model_name = "gemma3:12b",
+        model_name = "gemma3:latest",
+        ollama_url = "http://localhost:11434", -- URL for Ollama server, Leave blank to use default local instance.
+        stream_suggestion = false,
+        python_command = "python3",
+        filetypes = {'c', 'cpp', 'asm', 's', 'python', 'lua','vim', "markdown"},
+        -- filetypes = {'python', 'lua','vim', "markdown"},
+        ollama_model_opts = {
+            num_predict = 40,
+           temperature = 0.1,
+        },
+        keymaps = {
+            suggestion = '<leader>a',
+            reject = '<leader>q',
+            insert_accept = '<Tab>',
+        },
+      },
+
+      lazy = false,
     },
 }

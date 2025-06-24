@@ -22,4 +22,15 @@ local options = {
     indent = { enable = true },
 }
 
+require('nvim-treesitter.parsers').get_parser_configs().yaml = {
+  install_info = {
+    url = "https://github.com/ikatyang/tree-sitter-yaml",
+    files = { "src/parser.c" },
+    branch = "master",
+    custom_entries = {
+      entry = "~/.tree-sitter/bin/tree-sitter-yaml.so"
+    }
+  },
+  filetype = "yaml"
+}
 return options

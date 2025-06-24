@@ -83,7 +83,7 @@ M.defaults = function()
             },
         },
     }
-    local servers = { "vimls", "rust_analyzer", "pylsp" }
+    local servers = { "vimls", "rust_analyzer", "pylsp", "lemminx" }
     for _, lsp in pairs(servers) do
         require("lspconfig")[lsp].setup {
             on_attach = M.on_attach,

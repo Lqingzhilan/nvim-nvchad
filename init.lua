@@ -61,12 +61,20 @@ if vim.g.neovide then
     -- 缩小字体大小
     vim.api.nvim_set_keymap('n', '<C-->', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.1<CR>',
         { noremap = true, silent = true })
-    vim.api.nvim_set_keymap('n', '<C-v>', '"+p', { noremap = true })
-    vim.api.nvim_set_keymap('v', '<C-v>', '"+p', { noremap = true })
-    vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true })
-    vim.api.nvim_set_keymap('i', '<C-v>', '<C-R>+', { noremap = true, silent = true })
-    -- 在命令模式下使用 Ctrl+V 来粘贴
-    vim.api.nvim_set_keymap('c', '<C-v>', '<C-R>+', { noremap = true, silent = true })
-    -- vim.api.nvim_set_keymap('t', '<C-v>', '<C-R>+', { noremap = true, silent = true })
-    vim.api.nvim_set_keymap('t', '<C-v>', '<C-\\><C-n>"+Pi', { noremap = true })
+    -- vim.api.nvim_set_keymap('n', '<C-v>', '"+p', { noremap = true })
+    -- vim.api.nvim_set_keymap('v', '<C-v>', '"+p', { noremap = true })
+    -- vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true })
+    -- vim.api.nvim_set_keymap('i', '<C-v>', '<C-R>+', { noremap = true, silent = true })
+    -- -- 在命令模式下使用 Ctrl+V 来粘贴
+    -- vim.api.nvim_set_keymap('c', '<C-v>', '<C-R>+', { noremap = true, silent = true })
+    -- -- vim.api.nvim_set_keymap('t', '<C-v>', '<C-R>+', { noremap = true, silent = true })
+    -- vim.api.nvim_set_keymap('t', '<C-v>', '<C-\\><C-n>"+Pi', { noremap = true })
 end
+vim.api.nvim_set_keymap('n', '<C-v>', '"+p', { noremap = true })
+vim.api.nvim_set_keymap('v', '<C-v>', '"+p', { noremap = true })
+vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true })
+vim.api.nvim_set_keymap('i', '<C-v>', '<C-R>+', { noremap = true, silent = true })
+-- 在命令模式下使用 Ctrl+V 来粘贴
+vim.api.nvim_set_keymap('c', '<C-v>', '<C-R>+', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('t', '<C-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<C-v>', '<C-\\><C-n>"+Pi', { noremap = true })

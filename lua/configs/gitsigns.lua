@@ -19,6 +19,15 @@ local options = {
 
     local map = vim.keymap.set
 
+    local gs = package.loaded.gitsigns
+    
+    -- 回退整个修改块
+    vim.keymap.set('n', '<leader>hr', gs.reset_hunk, { buffer = bufnr })
+    
+    -- 回退选中部分
+    vim.keymap.set('v', '<Enter>', function()
+      gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+    end, { buffer = bufnr })
     -- map("n", "<leader>rh", gs.reset_hunk, opts "Reset Hunk")
     -- map("n", "<leader>ph", gs.preview_hunk, opts "Preview Hunk")
     -- map("n", "<leader>gb", gs.blame_line, opts "Blame Line")
@@ -52,7 +61,6 @@ local options = {
     row = 0,
     col = 1,
   },
-
 }
 
 return options
