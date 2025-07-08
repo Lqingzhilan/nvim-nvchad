@@ -142,8 +142,8 @@ code.setup({
     },
 
     strategies = {
-        chat = { adapter = "ollama_gemma3" },
-        inline = { adapter = "ollama_gemma3" },
+        chat = { adapter = "ollama_deepseek" },
+        inline = { adapter = "ollama_deepseek" },
     },
 
     opts = {

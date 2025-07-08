@@ -80,6 +80,7 @@ return {
         opts = {
             formatters_by_ft = {
                 lua = { "stylua" },
+                yaml = { "yamlfmt" }  -- 使用 yamlfmt 格式化
             },
         },
         config = function(_, opts)
@@ -409,6 +410,6 @@ return {
         },
       },
 
-      lazy = false,
+      --lazy = false,
     },
 }

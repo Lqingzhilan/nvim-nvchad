@@ -126,6 +126,42 @@ M.defaults = function()
             ),
         },
     }
+    require("lspconfig")["yamlls"].setup {
+      settings = {
+        yaml = {
+          -- 启用格式化功能
+          format = {
+            enable = true,
+            singleQuote = true,      -- 使用单引号
+            bracketSpacing = true,    -- 对象字面量的大括号间打印空格
+            printWidth = 100,         -- 行宽限制
+            proseWrap = "preserve",   -- 保留原始换行
+          },
+          -- 其他设置
+          validate = true,            -- 启用验证
+          schemas = {
+            kubernetes = "*.yaml",    -- Kubernetes 支持
+            ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+          },
+          schemaStore = {
+            enable = true,            -- 启用 schema 存储
+            url = "https://www.schemastore.org/api/json/catalog.json",
+          },
+        }
+      },
+      -- 文件类型设置
+      filetypes = { "yaml", "yml" },
+      -- 附加功能
+      on_attach = function(client, bufnr)
+        -- 保存时自动格式化
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          buffer = bufnr,
+          callback = function()
+            vim.lsp.buf.format({ async = false })
+          end
+        })
+      end
+    }
 end
 
 return M
