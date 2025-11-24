@@ -72,7 +72,8 @@ if vim.g.neovide then
 end
 vim.api.nvim_set_keymap('n', '<C-v>', '"+p', { noremap = true })
 vim.api.nvim_set_keymap('v', '<C-v>', '"+p', { noremap = true })
-vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true })
+-- vim.api.nvim_set_keymap('v', 'p', '"+p', { noremap = true })
+vim.api.nvim_set_keymap('v', 'p', '"_dP', { noremap = true })
 vim.api.nvim_set_keymap('i', '<C-v>', '<C-R>+', { noremap = true, silent = true })
 -- 在命令模式下使用 Ctrl+V 来粘贴
 vim.api.nvim_set_keymap('c', '<C-v>', '<C-R>+', { noremap = true, silent = true })

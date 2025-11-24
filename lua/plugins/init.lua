@@ -9,8 +9,7 @@ return {
         -- opts = function()
         --     return { override = require "nvchad.icons.devicons" }
         -- end,
-        config = function(_, opts)
-            dofile(vim.g.base46_cache .. "devicons")
+        config = function(_, opts) dofile(vim.g.base46_cache .. "devicons")
             require("nvim-web-devicons").setup(opts)
         end,
     },
@@ -139,6 +138,8 @@ return {
         dependencies = {
             {
                 -- snippet plugin
+                "nvim-lua/plenary.nvim",
+		"tzachar/cmp-ai",
                 "L3MON4D3/LuaSnip",
                 dependencies = "rafamadriz/friendly-snippets",
                 opts = { history = true, updateevents = "TextChanged,TextChangedI" },
@@ -412,4 +413,45 @@ return {
 
       --lazy = false,
     },
+    {
+        'dhruvasagar/vim-table-mode',
+        lazy = false,
+    },
+    {
+	    'tzachar/cmp-ai',
+	    config = function()
+            local cmp_ai = require('cmp_ai.config')
+            cmp_ai:setup({
+              max_lines = 100,
+              provider = 'Ollama',
+              provider_options = {
+                model = 'deepseek-coder:6.7b',
+                -- model = 'starcoder2:7b',
+                -- model = 'dagbs/qwen2.5-coder-7b-instruct-abliterated:latest',
+                auto_unload = false, -- Set to true to automatically unload the model when
+                                    -- exiting nvim.
+              },
+              notify = true,
+              notify_callback = function(msg)
+                vim.notify(msg)
+              end,
+              run_on_every_keystroke = true,
+              ignored_file_types = {
+                -- default is not to ignore
+                -- uncomment to ignore in lua:
+                -- lua = true
+              },
+            })
+	    end
+    },
+    {
+        "mason-org/mason-lspconfig.nvim",
+        opts = {
+                ensure_installed = { "lua_ls", "vimls", "rust_analyzer", "pylsp", "lemminx", "clangd", "pylsp", "yamlls" },
+        },
+        dependencies = {
+                { "mason-org/mason.nvim", opts = {} },
+                "neovim/nvim-lspconfig",
+        },
+    }
 }

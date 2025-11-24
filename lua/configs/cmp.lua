@@ -102,6 +102,7 @@ local options = {
     end, { "i", "s" }),
   },
   sources = {
+    -- {name = "cmp_ai"},
     { name = 'CodeCompanion' },  -- 启用 codeCompanion 源
     { name = "nvim_lsp" },
     { name = "luasnip" },

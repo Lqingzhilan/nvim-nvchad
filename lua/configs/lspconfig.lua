@@ -36,7 +36,6 @@ M.on_init = function(client, _)
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
-
 M.capabilities.textDocument.completion.completionItem = {
     documentationFormat = { "markdown", "plaintext" },
     snippetSupport = true,
@@ -55,113 +54,143 @@ M.capabilities.textDocument.completion.completionItem = {
     },
 }
 
-
 M.defaults = function()
     dofile(vim.g.base46_cache .. "lsp")
     require "nvchad.lsp"
 
-    require("lspconfig")["lua_ls"].setup {
-        on_attach = M.on_attach,
-        capabilities = M.capabilities,
-        on_init = M.on_init,
+    local mason_lspconfig = require("mason-lspconfig")
 
-        settings = {
-            Lua = {
-                diagnostics = {
-                    globals = { "vim" },
-                },
-                workspace = {
-                    library = {
-                        vim.fn.expand "$VIMRUNTIME/lua",
-                        vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
-                        vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types",
-                        vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
-                    },
-                    maxPreload = 100000,
-                    preloadFileSize = 10000,
-                },
-            },
-        },
-    }
-    local servers = { "vimls", "rust_analyzer", "pylsp", "lemminx" }
-    for _, lsp in pairs(servers) do
-        require("lspconfig")[lsp].setup {
-            on_attach = M.on_attach,
-            capabilities = M.capabilities,
-            offset_encoding = "utf-8",
-        }
-    end
-
-    require("lspconfig")["clangd"].setup {
-        -- on_attach = M.on_attach,
-        capabilities = M.capabilities,
-        cmd = {
+    mason_lspconfig.setup {
+        ensure_installed = {
+            "lua_ls",
+            "vimls",
+            "rust_analyzer",
+            "pylsp",
+            "lemminx",
             "clangd",
-            "--background-index",
-            "-j=16",
-            "--clang-tidy",
-            -- 全局补全（会自动补充头文件）
-            "--all-scopes-completion",
-            -- 更详细的补全内容
-            "--completion-style=detailed",
-            -- 补充头文件的形式
-            -- "--header-insertion=iwyu",
-            "--pretty",
-            -- "--header-insertion=never",
-            "--header-insertion-decorators=0",
-            -- pch优化的位置
-            "--pch-storage=memory",
-            "--cross-file-rename",
-            "--enable-config",
-            -- "--fallback-style=none",
-            -- "--style=file:/home/Allen/.clang-format",
-            -- "--offset-encoding=utf-16",
-            -- "--rename-file-limit=0",
-            -- "--log=verbose",
+            "yamlls",
         },
-        filetypes = { "c", "cpp", "objc", "objcpp", "asm", "s" }, -- 添加对汇编的支持
+
         handlers = {
-            ['textDocument/hover'] = vim.lsp.with(
-                vim.lsp.handlers.hover, { border = 'rounded' }
-            ),
+            -- 默认 handler
+            function(server_name)
+                require("lspconfig")[server_name].setup {
+                    on_attach = M.on_attach,
+                    capabilities = M.capabilities,
+                    on_init = M.on_init,
+                }
+            end,
+
+            -- lua_ls 特殊配置
+            ["lua_ls"] = function()
+                require("lspconfig").lua_ls.setup {
+                    on_attach = M.on_attach,
+                    capabilities = M.capabilities,
+                    on_init = M.on_init,
+                    settings = {
+                        Lua = {
+                            diagnostics = { globals = { "vim" } },
+                            workspace = {
+                                library = {
+                                    vim.fn.expand "$VIMRUNTIME/lua",
+                                    vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
+                                    vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types",
+                                    vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
+                                },
+                                maxPreload = 100000,
+                                preloadFileSize = 10000,
+                            },
+                        },
+                    },
+                }
+            end,
+
+            -- clangd 特殊配置
+            ["clangd"] = function()
+                require("lspconfig").clangd.setup {
+                    on_attach = M.on_attach,
+                    capabilities = M.capabilities,
+                    cmd = {
+                        "clangd",
+                        "--background-index",
+                        "-j=16",
+                        "--clang-tidy",
+                        "--all-scopes-completion",
+                        "--completion-style=detailed",
+                        "--pretty",
+                        "--header-insertion-decorators=0",
+                        "--pch-storage=memory",
+                        "--cross-file-rename",
+                        "--enable-config",
+                    },
+                    filetypes = { "c", "cpp", "objc", "objcpp", "asm", "s" },
+                    handlers = {
+                        ["textDocument/hover"] = vim.lsp.with(
+                            vim.lsp.handlers.hover, { border = "rounded" }
+                        ),
+                    },
+                }
+            end,
+
+            -- yamlls 特殊配置
+            ["yamlls"] = function()
+                require("lspconfig").yamlls.setup {
+                    on_attach = function(client, bufnr)
+                        M.on_attach(client, bufnr)
+                        vim.api.nvim_create_autocmd("BufWritePre", {
+                            buffer = bufnr,
+                            callback = function()
+                                vim.lsp.buf.format { async = false }
+                            end,
+                        })
+                    end,
+                    capabilities = M.capabilities,
+                    settings = {
+                        yaml = {
+                            format = {
+                                enable = true,
+                                singleQuote = true,
+                                bracketSpacing = true,
+                                printWidth = 100,
+                                proseWrap = "preserve",
+                            },
+                            validate = true,
+                            schemas = {
+                                kubernetes = "*.yaml",
+                                ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+                            },
+                            schemaStore = {
+                                enable = true,
+                                url = "https://www.schemastore.org/api/json/catalog.json",
+                            },
+                        },
+                    },
+                    filetypes = { "yaml", "yml" },
+                }
+            end,
         },
     }
-    require("lspconfig")["yamlls"].setup {
-      settings = {
-        yaml = {
-          -- 启用格式化功能
-          format = {
-            enable = true,
-            singleQuote = true,      -- 使用单引号
-            bracketSpacing = true,    -- 对象字面量的大括号间打印空格
-            printWidth = 100,         -- 行宽限制
-            proseWrap = "preserve",   -- 保留原始换行
-          },
-          -- 其他设置
-          validate = true,            -- 启用验证
-          schemas = {
-            kubernetes = "*.yaml",    -- Kubernetes 支持
-            ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-          },
-          schemaStore = {
-            enable = true,            -- 启用 schema 存储
-            url = "https://www.schemastore.org/api/json/catalog.json",
-          },
-        }
-      },
-      -- 文件类型设置
-      filetypes = { "yaml", "yml" },
-      -- 附加功能
-      on_attach = function(client, bufnr)
-        -- 保存时自动格式化
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          buffer = bufnr,
-          callback = function()
-            vim.lsp.buf.format({ async = false })
-          end
-        })
-      end
-    }
+
+    -- :LspInstall <server>
+    vim.api.nvim_create_user_command("LspInstall", function(opts)
+        local server = opts.args
+        if server == "" then
+            print("Usage: :LspInstall <server_name>")
+            return
+        end
+        local registry = require("mason-registry")
+        local ok, pkg = pcall(registry.get_package, server)
+        if not ok then
+            print("Server " .. server .. " not found in Mason registry")
+            return
+        end
+        if not pkg:is_installed() then
+            pkg:install()
+            print("Installing " .. server .. " ...")
+        else
+            print(server .. " is already installed")
+        end
+    end, { nargs = 1, complete = "custom,v:lua.MasonComplete" })
 end
 
 return M
